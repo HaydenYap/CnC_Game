@@ -1,7 +1,7 @@
 import React from 'react';
 import Game from './Game/game';
 import Nav from './Nav/nav';
-import Code from './Code/code';
+//import Code from './Code/code';
 import './App.scss';
 
 class App extends React.Component {
@@ -13,6 +13,7 @@ class App extends React.Component {
       </div>
     );
   }
+
 }
 
 export default App;

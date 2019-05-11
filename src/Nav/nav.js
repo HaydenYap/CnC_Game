@@ -7,7 +7,6 @@ class Nav extends React.Component{
         return(
             <div title="Navigation Bar" id="nav" className="row">
                 <div id="navHome" title="Home Directory" className="col-3 h1"> 
-                    {title}
                 </div>
             </div>
         )
