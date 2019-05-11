@@ -1,0 +1,13 @@
+#nav{
+    height: 6vh;
+    margin:0;
+    background-color: slategray;
+}
+
+#navHome{ 
+    color: white;
+
+    &:hover{
+        opacity: 0.5;
+    }
+}
