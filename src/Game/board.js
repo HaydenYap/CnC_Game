@@ -1,5 +1,5 @@
 import React from 'react';
-import './game.scss';
+import './board.scss';
 
 function drawGrid(canvasContext, canvas){
   canvasContext.strokeStyle = 'grey';
@@ -36,8 +36,8 @@ class Board extends React.Component{
 
     render(){
         return(
-            <div>
-              <canvas ref="gameBoard" width={780} height={780} />
+            <div id="canvasContainer" className="p-5">
+              <canvas id="gameCanvas" ref="gameBoard" width={780} height={780} />
             </div>
         )
     }
