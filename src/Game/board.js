@@ -4,7 +4,6 @@ import './game.scss';
 class Board extends React.Component{
     componentDidMount () {
       const canvas = this.refs.gameBoard
-      console.log("hmm", canvas)
       const ctx = canvas.getContext('2d');
       ctx.fillRect(0, 0, canvas.width, canvas.height)
     }
