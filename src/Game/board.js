@@ -87,11 +87,17 @@ class Board extends React.Component{
       })
     }
 
+    changeDirection (direction) {
+      const {snake} = this.state
+      this.state.snake.direction = direction
+      console.log("board", direction)
+    }
+
     render(){
         return(
             <div>
               <canvas ref="gameBoard" width={780} height={780} className='p-5'/>
-              <Snake snake={this.state.snake} moveSnake={this.moveSnake.bind(this)} />
+              <Snake snake={this.state.snake} changeDirection={this.changeDirection.bind(this)} moveSnake={this.moveSnake.bind(this)} />
             </div>
         )
     }
