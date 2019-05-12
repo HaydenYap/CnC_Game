@@ -1,7 +1,16 @@
 import React from 'react';
 import './board.scss';
 
+<<<<<<< HEAD
 const cellSize = 26
+=======
+const horizontalDistance = 26
+const verticalDistance = 26
+// function draw(){
+//     ctx.fillStyle = 'green';
+//     ctx.fillRect(0, 0, 20, 20);
+// }
+>>>>>>> 68fc1d4926f3f5b1abee365248fd5d2a169862a5
 
 class Board extends React.Component{
     constructor (props) {
@@ -31,6 +40,12 @@ class Board extends React.Component{
         ctx.fillRect(cord.x *  cellSize, cord.y * cellSize, cellSize, cellSize);
       })
       ctx.fillRect(snake.tail.x *  cellSize, snake.tail.y * cellSize, cellSize, cellSize);
+    }
+
+    drawPoint(x, y) {
+      const {canvas, ctx} = this.state
+      ctx.fillStyle = 'green';
+      ctx.fillRect(horizontalDistance * x, verticalDistance * y, 26, 26);
     }
 
     drawGrid() {
@@ -69,9 +84,13 @@ class Board extends React.Component{
       }, function () {
         this.drawBackground();
         this.drawGrid();
+<<<<<<< HEAD
 
         this.drawSnake();
 
+=======
+        this.drawPoint(1, 1);
+>>>>>>> 68fc1d4926f3f5b1abee365248fd5d2a169862a5
       })
     }
 
