@@ -82,7 +82,7 @@ class Snake extends React.Component{
         snake.tail.y = snake.body[0].y;
         snake.body.splice(0,1);
         this.props.moveSnake();
-      }, 200);
+      }, 50);
     }
 
     render(){

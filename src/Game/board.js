@@ -209,7 +209,7 @@ class Board extends React.Component{
           alive: true
         },
       score: newScore,
-      food: {} 
+      food: {}
       })
       this.drawBoard();
     }
@@ -238,8 +238,8 @@ class Board extends React.Component{
       const {ctx, snake, food} = this.state;
       ctx.fillStyle = 'red';
       var position = {
-        x: 15,
-        y: 15
+        x: Math.floor(Math.random() * 29),
+        y: Math.floor(Math.random() * 29)
       }
       while (snake.body.some(cord => _.isEqual(cord, position))) {
         position.x = Math.floor(Math.random() * 29);

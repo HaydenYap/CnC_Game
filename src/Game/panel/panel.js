@@ -10,7 +10,7 @@ class Panel extends React.Component{
     render(){
         return(
             <div id='panel'>
-                <div className='col-12'>
+                <div className='col-12 py-3'>
                     <div title="Current Score Field">
                         <div title="Score Title" className='scoreTitle'>
                             Score:
