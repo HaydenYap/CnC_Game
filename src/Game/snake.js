@@ -4,10 +4,6 @@ import _ from 'lodash'
 
 class Snake extends React.Component{
 
-    constructor (props) {
-      super(props)
-    }
-
     selfCollide() {
       const snake = this.props.snake;
       return snake.body.some(cord => _.isEqual(cord, snake.head)) || _.isEqual(snake.head, snake.tail)
@@ -22,16 +18,16 @@ class Snake extends React.Component{
 
         switch(snake.newDirection){
           case 'up':
-            newY-= 1;
+            newY = snake.head.y - 1;
             break;
           case 'down':
-            newY += 1;
+            newY = snake.head.y + 1;
             break;
           case 'left':
-            newX -= 1;
+            newX = snake.head.x - 1;
             break;
           case 'right':
-            newX += 1;
+            newX = snake.head.x + 1;
             break;
           default:
             break;
@@ -57,13 +53,14 @@ class Snake extends React.Component{
         } else {
           snake.direction = snake.newDirection;
         }
+        snake.headLast.x = snake.head.x;
+        snake.headLast.y = snake.head.y;
+        snake.head.x = newX;
+        snake.head.y = newY;
 
         if(this.props.snake.running === false){
           clearInterval(running)
         }
-
-        snake.head.x = newX;
-        snake.head.y = newY;
 
         var newCell = {
           x: snake.head.x,
@@ -81,7 +78,7 @@ class Snake extends React.Component{
         snake.tail.x = snake.body[0].x;
         snake.tail.y = snake.body[0].y;
         snake.body.splice(0,1);
-        this.props.moveSnake();
+        this.props.changeDirection(snake.direction);
       }, 50);
     }
 

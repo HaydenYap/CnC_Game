@@ -3,10 +3,11 @@ import './nav.scss';
 
 class Nav extends React.Component{
     render(){
-        var title = "Home Directory"
+        var title = "C'n'C Snake!"
         return(
             <div title="Navigation Bar" id="nav" className="row">
                 <div id="navHome" title="Home Directory" className="col-3 h1"> 
+                    {title}
                 </div>
             </div>
         )
