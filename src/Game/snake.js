@@ -81,7 +81,11 @@ class Snake extends React.Component{
       }, 200 / this.props.snake.speed);
     }
 
+
     render(){
+      if(this.props.snake.newDirection !== '' && !this.props.snake.running && this.props.snake.alive ){
+        this.run()
+      }
       return(
         <KeyboardEventHandler
           handleKeys={['left', 'up', 'right', 'down', 'space']}
@@ -101,7 +105,7 @@ class Snake extends React.Component{
             }
             else {
               if (!this.props.snake.running && this.props.snake.alive ){
-                this.run(this.props)
+                this.run()
               }
               this.props.changeDirection(key)
             }
