@@ -17,21 +17,27 @@ class Board extends React.Component{
             x: 0,
             y: 0
           },
-          direction: '',
-          body: [{x:1,y:0}, {x:2,y:0}, {x:3,y:0}]
+          direction: 'right',
+          body: [{x:0,y:0},{x:1,y:0}, {x:2,y:0}, {x:3,y:0}, {x:4,y:0}],
+          length: 5
         }
       }
+    }
+
+    moveSnake(){
+      const {canvas, ctx, snake} = this.state
+      ctx.fillStyle = 'black';
+      ctx.fillRect(snake.tail.x *  cellSize, snake.tail.y * cellSize, cellSize, cellSize);
+      ctx.fillStyle = 'green';
+      ctx.fillRect(snake.head.x *  cellSize, snake.head.y * cellSize, cellSize, cellSize);
     }
 
     drawSnake(){
       const {canvas, ctx, snake} = this.state
       ctx.fillStyle = 'green';
-
-      ctx.fillRect(snake.head.x *  cellSize, snake.head.y * cellSize, cellSize, cellSize);
       snake.body.map(cord => {
         ctx.fillRect(cord.x *  cellSize, cord.y * cellSize, cellSize, cellSize);
       })
-      ctx.fillRect(snake.tail.x *  cellSize, snake.tail.y * cellSize, cellSize, cellSize);
     }
 
     drawPoint(x, y) {
@@ -76,7 +82,6 @@ class Board extends React.Component{
       }, function () {
         this.drawBackground();
         this.drawGrid();
-
         this.drawSnake();
 
       })
@@ -86,7 +91,7 @@ class Board extends React.Component{
         return(
             <div>
               <canvas ref="gameBoard" width={780} height={780} className='p-5'/>
-              <Snake snake={this.state.snake}/>
+              <Snake snake={this.state.snake} moveSnake={this.moveSnake.bind(this)} />
             </div>
         )
     }
