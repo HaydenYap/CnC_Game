@@ -46,9 +46,9 @@ class Board extends React.Component{
     moveSnake(){
       const {ctx, snake, food} = this.state
       ctx.fillStyle = 'black';
-      ctx.fillRect(snake.tail.x *  cellSize, snake.tail.y * cellSize, cellSize, cellSize);
+      this.drawRect(snake.tail.x,snake.tail.y,1,1);
       ctx.fillStyle = 'green';
-      ctx.fillRect(snake.head.x *  cellSize, snake.head.y * cellSize, cellSize, cellSize);
+      this.drawRect(snake.head.x,snake.head.y,1,1);
 
       // We ate food
       if (snake.head.x === food.x && snake.head.y === food.y) {
@@ -100,7 +100,7 @@ class Board extends React.Component{
       const {ctx, snake} = this.state
       ctx.fillStyle = 'green';
       snake.body.forEach(cord => {
-        ctx.fillRect(cord.x *  cellSize, cord.y * cellSize, cellSize, cellSize);
+        this.drawRect(cord.x, cord.y, 1,1);
       })
     }
 
