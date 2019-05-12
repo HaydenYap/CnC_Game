@@ -15,7 +15,7 @@ class Board extends React.Component{
 
     drawGrid() {
       const {canvas, ctx} = this.state
-      
+
       ctx.strokeStyle = 'grey';
       var width = canvas.width;
       var horizontalDistance = width / 30;
@@ -33,8 +33,8 @@ class Board extends React.Component{
       for (var horizontal = verticalDistance; horizontal < height; horizontal += verticalDistance){
         ctx.beginPath();
         ctx.moveTo(0, horizontal);
-          ctx.lineTo(width ,horizontal);
-          ctx.stroke();
+        ctx.lineTo(width ,horizontal);
+        ctx.stroke();
       }
     }
 
@@ -45,10 +45,13 @@ class Board extends React.Component{
 
     componentDidMount () {
       const canvas = this.refs.gameBoard
-      this.state.canvas = canvas
-      this.state.ctx = canvas.getContext('2d')
-      this.drawBackground();
-      this.drawGrid();
+      this.setState({
+        canvas: canvas,
+        ctx: canvas.getContext('2d')
+      }, function () {
+        this.drawBackground();
+        this.drawGrid();
+      })
     }
 
     render(){
