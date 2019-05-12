@@ -143,7 +143,8 @@ class Board extends React.Component{
       newState.snake.running = false;
       newState.snake.alive = false;
       this.setState(newState);
-
+      this.drawBackground()
+      
       //Horizonal Lines
       ctx.fillStyle = 'white';
       this.drawRect(5,9,4,1);
