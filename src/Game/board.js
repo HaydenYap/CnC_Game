@@ -64,7 +64,7 @@ class Board extends React.Component{
     addBody() {
       const {snake, score} = this.state
       var newTail = {
-        
+
       }
       score.current += 1
       if (score.current > score.high) {
@@ -235,7 +235,6 @@ class Board extends React.Component{
       newState.snake.newDirection = direction;
       this.setState(newState);
       this.moveSnake();
-      console.log("board", direction)
     }
 
     drawFood () {

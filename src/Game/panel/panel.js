@@ -4,7 +4,6 @@ import './panel.scss'
 class Panel extends React.Component{
     constructor(props){
         super(props);
-        console.log(this.props)
     }
 
     render(){
