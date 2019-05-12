@@ -84,7 +84,7 @@ class Board extends React.Component{
     render(){
         return(
             <div>
-              <canvas ref="gameBoard" width={780} height={780} />
+              <canvas ref="gameBoard" width={780} height={780} className='p-5'/>
             </div>
         )
     }
