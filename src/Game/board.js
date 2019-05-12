@@ -1,7 +1,8 @@
 import React from 'react';
 import './board.scss';
 
-
+const horizontalDistance = 26
+const verticalDistance = 26
 // function draw(){
 //     ctx.fillStyle = 'green';
 //     ctx.fillRect(0, 0, 20, 20);
@@ -13,14 +14,18 @@ class Board extends React.Component{
       this.state = {}
     }
 
+    drawPoint(x, y) {
+      const {canvas, ctx} = this.state
+      ctx.fillStyle = 'green';
+      ctx.fillRect(horizontalDistance * x, verticalDistance * y, 26, 26);
+    }
+
     drawGrid() {
       const {canvas, ctx} = this.state
 
       ctx.strokeStyle = 'grey';
       var width = canvas.width;
-      var horizontalDistance = width / 30;
       var height = canvas.height;
-      var verticalDistance = height / 30;
       console.log(width)
       ctx.fillRect(0, 0, canvas.width, canvas.height)
       for (var vertical = horizontalDistance; vertical < width; vertical += horizontalDistance){
@@ -51,6 +56,7 @@ class Board extends React.Component{
       }, function () {
         this.drawBackground();
         this.drawGrid();
+        this.drawPoint(1, 1);
       })
     }
 
