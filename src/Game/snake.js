@@ -100,6 +100,9 @@ class Snake extends React.Component{
               return
             }
             else {
+              if (!this.props.snake.running && this.props.snake.alive ){
+                this.run(this.props)
+              }
               this.props.changeDirection(key)
             }
           }
