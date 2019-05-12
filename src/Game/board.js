@@ -88,7 +88,7 @@ class Board extends React.Component{
 
     endGame() {
       this.state.snake.running = false;
-      this.state.snake.aliive = false;
+      this.state.snake.alive = false;
 
       //Horizonal Lines
       this.drawRect(5,9,4,1);
