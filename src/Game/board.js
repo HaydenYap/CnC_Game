@@ -1,5 +1,6 @@
 import React from 'react';
 import './board.scss';
+import Snake from './snake'
 
 const cellSize = 26
 
@@ -9,7 +10,7 @@ class Board extends React.Component{
       this.state = {
         snake: {
           head: {
-            x: 4, 
+            x: 4,
             y: 0
           },
           tail: {
@@ -17,8 +18,8 @@ class Board extends React.Component{
             y: 0
           },
           direction: '',
-          body: [{x:1,y:0}, {x:2,y:0}, {x:3,y:0}] 
-        }  
+          body: [{x:1,y:0}, {x:2,y:0}, {x:3,y:0}]
+        }
       }
     }
 
@@ -85,6 +86,7 @@ class Board extends React.Component{
         return(
             <div>
               <canvas ref="gameBoard" width={780} height={780} className='p-5'/>
+              <Snake snake={this.state.snake}/>
             </div>
         )
     }
