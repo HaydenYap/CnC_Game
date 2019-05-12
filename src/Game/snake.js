@@ -6,10 +6,10 @@ class Snake extends React.Component{
 
     constructor (props) {
       super(props)
-      console.log(this.props)  
     }
 
     run() {
+      this.props.snake.running = true;
       var running = setInterval(() => {
         const snake = this.props.snake;
 
@@ -58,13 +58,10 @@ class Snake extends React.Component{
         return(
           <div>
           <KeyboardEventHandler
-            handleKeys={['left', 'up', 'right', 'down','r']}
+            handleKeys={['left', 'up', 'right', 'down']}
             onKeyEvent={(key, e) => {
               var direction = this.props.snake.direction
-              if(key === 'r'){
-                this.props.resetBoard()
-              }
-              else if (key === 'up' && (direction === 'down' || direction === 'up')) {
+              if (key === 'up' && (direction === 'down' || direction === 'up')) {
                 return
               }
               else if (key === 'down' && (direction === 'up'|| direction === 'down')) {
@@ -79,7 +76,6 @@ class Snake extends React.Component{
               else {
                 if (!this.props.snake.running && this.props.snake.alive){
                   this.run(this.props)
-                  this.props.snake.running = true;
                 }
                 this.props.changeDirection(key)
               }

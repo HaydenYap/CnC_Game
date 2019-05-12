@@ -1,8 +1,11 @@
 import React from 'react';
 import './board.scss';
 import Snake from './snake'
+import Panel from './panel/panel'
+import KeyboardEventHandler from 'react-keyboard-event-handler';
 
-const cellSize = 26
+var boardSize = 720
+const cellSize = boardSize/30;
 
 class Board extends React.Component{
     constructor (props) {
@@ -20,7 +23,8 @@ class Board extends React.Component{
           direction: '',
           body: [{x:15,y:15}],
           running: false,
-          alive: true
+          alive: true,
+          restart: false,
         }
       }
     }
@@ -53,20 +57,18 @@ class Board extends React.Component{
       const {canvas, ctx} = this.state
 
       ctx.strokeStyle = 'grey';
-      var width = canvas.width;
-      var height = canvas.height;
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
-      for (var vertical = cellSize; vertical < width; vertical += cellSize){
+      ctx.fillRect(0, 0, boardSize, boardSize)
+      for (var vertical = cellSize; vertical < boardSize; vertical += cellSize){
         ctx.beginPath();
         ctx.moveTo(vertical, 0);
-        ctx.lineTo(vertical, height);
+        ctx.lineTo(vertical, boardSize);
         ctx.stroke();
       }
 
-      for (var horizontal = cellSize; horizontal < height; horizontal += cellSize){
+      for (var horizontal = cellSize; horizontal < boardSize; horizontal += cellSize){
         ctx.beginPath();
         ctx.moveTo(0, horizontal);
-        ctx.lineTo(width ,horizontal);
+        ctx.lineTo(boardSize ,horizontal);
         ctx.stroke();
       }
     }
@@ -74,7 +76,7 @@ class Board extends React.Component{
     drawBackground() {
       const {canvas, ctx} = this.state
       ctx.fillStyle = 'black';
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      ctx.fillRect(0, 0, boardSize, boardSize)
     }
 
     endGame() {
@@ -169,10 +171,21 @@ class Board extends React.Component{
 
     render(){
         return(
-            <div>
-              <canvas id='board' ref="gameBoard" width={780} height={780} className='p-5'/>
-              <Snake snake={this.state.snake} changeDirection={this.changeDirection.bind(this)} moveSnake={this.moveSnake.bind(this)} endGame={this.endGame.bind(this)} resetBoard={this.resetBoard.bind(this)} 
-              drawBoard={this.drawBoard.bind(this)}/>
+            <div id='gameContainer' className='container-fluid row'>
+              <div className='col-md-12 col-lg-8 p-0'>
+                <canvas id='gameBoard' ref="gameBoard" width={boardSize} height={boardSize} />
+                <Snake snake={this.state.snake} changeDirection={this.changeDirection.bind(this)} moveSnake={this.moveSnake.bind(this)} endGame={this.endGame.bind(this)} resetBoard={this.resetBoard.bind(this)} 
+                drawBoard={this.drawBoard.bind(this)}/>
+              </div>
+              <div className='col-md-12 col-lg-4 p-0'>
+                <Panel />
+              </div>
+              <KeyboardEventHandler
+              handleKeys={['r']}
+              onKeyEvent={(key, e) => {
+              if(key === 'r'){
+                this.resetBoard()
+              } }}/>
             </div>
         )
     }

@@ -1,10 +1,13 @@
-#canvasCSontainer{
+#gameContainer{
     height: 94vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding:auto;
+    background-color: black;
 }
 
-#gameCanvas{
-    border: 1px solid black;
+#gameBoard{
+    outline: 1px solid white;
 }
+
