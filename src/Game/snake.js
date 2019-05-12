@@ -58,56 +58,54 @@ class Snake extends React.Component{
         snake.head.x = newX;
         snake.head.y = newY;
 
-        if(this.props.snake.running === false){
-          clearInterval(running)
-        }
-
         var newCell = {
           x: snake.head.x,
           y: snake.head.y
         }
+        
+        if(this.props.snake.running === false){
+          clearInterval(running)
+        }
 
-        if (snake.head.x > 29 || snake.head.y > 29 || snake.head.x < 0 || snake.head.y < 0 || this.selfCollide()) {
+        else if (snake.head.x > 29 || snake.head.y > 29 || snake.head.x < 0 || snake.head.y < 0 || this.selfCollide()) {
           snake.running = false
           snake.alive = false
           clearInterval(running);
         }
-
 
         snake.body.push(newCell)
         snake.tail.x = snake.body[0].x;
         snake.tail.y = snake.body[0].y;
         snake.body.splice(0,1);
         this.props.changeDirection(snake.direction);
-      }, 50);
+      }, 200 / this.props.snake.speed);
     }
 
     render(){
-        return(
-          <KeyboardEventHandler
-            handleKeys={['left', 'up', 'right', 'down']}
-            onKeyEvent={(key, e) => {
-              var direction = this.props.snake.direction
-              if (key === 'up' && (direction === 'down' || direction === 'up')) {
-                return
-              }
-              else if (key === 'down' && (direction === 'up'|| direction === 'down')) {
-                return
-              }
-              else if (key === 'left' && (direction === 'right'|| direction === 'left')) {
-                return
-              }
-              else if (key === 'right' && (direction === 'left'|| direction === 'right')) {
-                return
-              }
-              else {
-                if (!this.props.snake.running && this.props.snake.alive){
-                  this.run(this.props)
-                }
-                this.props.changeDirection(key)
-              }
-            }}/>
-        )
+      return(
+        <KeyboardEventHandler
+          handleKeys={['left', 'up', 'right', 'down', 'space']}
+          onKeyEvent={(key, e) => {
+            var direction = this.props.snake.direction
+            if (key === 'up' && (direction === 'down' || direction === 'up')) {
+              return
+            }
+            else if (key === 'down' && (direction === 'up'|| direction === 'down')) {
+              return
+            }
+            else if (key === 'left' && (direction === 'right'|| direction === 'left')) {
+              return
+            }
+            else if (key === 'right' && (direction === 'left'|| direction === 'right')) {
+              return
+            }
+            else {
+              this.props.changeDirection(key)
+            }
+          }
+          } 
+        />
+      )
     }
 }
 

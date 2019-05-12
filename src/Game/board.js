@@ -33,7 +33,8 @@ class Board extends React.Component{
           },
           body: [{x:15,y:15}],
           running: false,
-          alive: true
+          alive: true,
+          speed: 1
         },
         score: {
           current: 0,
@@ -137,6 +138,7 @@ class Board extends React.Component{
 
     endGame() {
       const {ctx} = this.state
+
       let newState = Object.assign({}, this.state);
       newState.snake.running = false;
       newState.snake.alive = false;
@@ -191,30 +193,37 @@ class Board extends React.Component{
     }
 
     resetBoard(){
+
       const newScore = {current: 0, high: this.state.score.high}
-      this.setState({
-        snake: {
-          head: {
-            x: 15,
-            y: 15
+      this.setState(({
+          snake: {
+            head: {
+              x: 15,
+              y: 15
+            },
+            tail: {
+              x: 15,
+              y: 15
+            },
+            direction: '',
+            newDirection: '',
+            headLast: {
+              x: 15,
+              y: 15
+            },
+            body: [{x:15,y:15}],
+            running: false,
+            alive: true,
+            speed: 1
           },
-          tail: {
-            x: 15,
-            y: 15
-          },
-          direction: '',
-          newDirection: '',
-          headLast: {
-            x: 15,
-            y: 15
-          },
-          body: [{x:15,y:15}],
-          running: false,
-          alive: true
-        },
-      score: newScore,
-      food: {}
-      })
+          score: newScore,
+          food: {},
+          play: {
+            start: false,
+            started: false
+          }
+        }
+      ))
       this.drawBoard();
     }
 
@@ -255,6 +264,18 @@ class Board extends React.Component{
       this.drawRect(position.x, position.y,1,1);
     }
 
+    speedUp(){
+      let newState = Object.assign({}, this.state);
+      newState.snake.speed = this.state.snake.speed * 2;        
+      this.setState(newState);
+    }
+    
+    speedDown(){
+      let newState = Object.assign({}, this.state);
+      newState.snake.speed = this.state.snake.speed / 2;        
+      this.setState(newState);
+    }
+
     componentDidMount () {
       this.drawBoard();
     }
@@ -271,17 +292,25 @@ class Board extends React.Component{
                   drawBoard={this.drawBoard.bind(this)}
                 />
                 <Panel score={this.state.score}
+                  snake={this.state.snake}
                   resetBoard={this.resetBoard.bind(this)}
                   endGame={this.endGame.bind(this)}
+                  speedUp={this.speedUp.bind(this)}
+                  speedDown={this.speedDown.bind(this)}
+                  changeDirection={this.changeDirection.bind(this)}
                 />
               </div>
               <KeyboardEventHandler
-              handleKeys={['r', 'esc']}
+              handleKeys={['r', 'esc', '[', ']']}
               onKeyEvent={(key, e) => {
                 if(key === 'r'){
                   this.resetBoard();
                 } else if (key ==='esc'){
                   this.endGame();
+                } else if (key === '['){
+                  this.speedDown()
+                } else if (key === ']'){
+                  this.speedUp('double');
                 }
               }}/>
             </div>
