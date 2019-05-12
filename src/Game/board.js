@@ -53,7 +53,11 @@ class Board extends React.Component{
     }
 
     addBody() {
-      const {snake} = this.state
+      const {snake, score} = this.state
+      score.current += 1
+      if (score.current > score.high) {
+        score.high = score.current;
+      }
       switch(snake.direction){
         case 'up':
           var newTail = {x: snake.tail.x, y: snake.tail.y - 1}
@@ -172,6 +176,7 @@ class Board extends React.Component{
     }
 
     resetBoard(){
+      const newScore = {current: 0, high: this.state.score.high}
       this.setState({
         snake: {
           head: {
@@ -186,7 +191,8 @@ class Board extends React.Component{
           body: [{x:15,y:15}],
           running: false,
           alive: true
-        }
+        },
+      score: newScore
       })
       this.drawBoard();
     }
