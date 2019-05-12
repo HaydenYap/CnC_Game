@@ -1,11 +1,16 @@
 import React from 'react';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
-
+import _ from 'lodash'
 
 class Snake extends React.Component{
 
     constructor (props) {
       super(props)
+    }
+
+    selfCollide() {
+      const snake = this.props.snake;
+      return snake.body.some(cord => _.isEqual(cord, snake.head)) || _.isEqual(snake.head, snake.tail)
     }
 
     run() {
@@ -34,7 +39,7 @@ class Snake extends React.Component{
           clearInterval(running)
         }
 
-        if (snake.head.x > 29 || snake.head.y > 29 || snake.head.x < 0 || snake.head.y < 0){
+        if (snake.head.x > 29 || snake.head.y > 29 || snake.head.x < 0 || snake.head.y < 0 || this.selfCollide()) {
           this.props.endGame();
           snake.running = false
           snake.alive = false

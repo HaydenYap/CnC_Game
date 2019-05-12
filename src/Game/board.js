@@ -209,10 +209,6 @@ class Board extends React.Component{
       this.state.snake.direction = direction
     }
 
-    hideFood () {
-
-    }
-
     drawFood () {
       const {canvas, ctx, snake, food} = this.state;
       ctx.fillStyle = 'red';
