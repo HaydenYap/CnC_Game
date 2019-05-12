@@ -3,9 +3,10 @@ import './board.scss';
 import Snake from './snake'
 import Panel from './panel/panel'
 import KeyboardEventHandler from 'react-keyboard-event-handler';
+import _ from 'lodash'
 
 var boardSize = 720
-const cellSize = boardSize/30;
+const cellSize = boardSize / 30;
 
 const container = {
   height: boardSize + 'px'
@@ -32,16 +33,51 @@ class Board extends React.Component{
         score: {
           current: 0,
           high: 0
-        }
+        },
+        food: {}
       }
     }
 
     moveSnake(){
-      const {canvas, ctx, snake} = this.state
+      const {canvas, ctx, snake, food} = this.state
       ctx.fillStyle = 'black';
       ctx.fillRect(snake.tail.x *  cellSize, snake.tail.y * cellSize, cellSize, cellSize);
       ctx.fillStyle = 'green';
       ctx.fillRect(snake.head.x *  cellSize, snake.head.y * cellSize, cellSize, cellSize);
+
+      // We ate food
+      if (snake.head.x === food.x && snake.head.y === food.y) {
+        this.addBody();
+        this.drawFood();
+      }
+    }
+
+    addBody() {
+      const {snake} = this.state
+      switch(snake.direction){
+        case 'up':
+          var newTail = {x: snake.tail.x, y: snake.tail.y - 1}
+          snake.body.push(newTail)
+          snake.tail = newTail
+          break;
+        case 'down':
+          var newTail = {x: snake.tail.x, y: snake.tail.y + 1}
+          snake.body.push(newTail)
+          snake.tail = newTail
+          break;
+        case 'left':
+          var newTail = {x: snake.tail.x - 1, y: snake.tail.y}
+          snake.body.push(newTail)
+          snake.tail = newTail
+          break;
+        case 'right':
+          var newTail = {x: snake.tail.x + 1, y: snake.tail.y}
+          snake.body.push(newTail)
+          snake.tail = newTail
+          break;
+        default:
+          break;
+      }
     }
 
     drawSnake(){
@@ -49,9 +85,7 @@ class Board extends React.Component{
       ctx.fillStyle = 'green';
       snake.body.map(cord => {
         ctx.fillRect(cord.x *  cellSize, cord.y * cellSize, cellSize, cellSize);
-        console.log(cord.x,cord.y)
       })
-      
     }
 
     drawRect(x, y, l, h) {
@@ -166,17 +200,38 @@ class Board extends React.Component{
         this.drawBackground();
         //this.drawGrid();
         this.drawSnake();
+        this.drawFood();
       })
-    }
-
-    componentDidMount () {
-      this.drawBoard();
     }
 
     changeDirection (direction) {
       const {snake} = this.state
       this.state.snake.direction = direction
-      console.log("board", direction)
+    }
+
+    hideFood () {
+
+    }
+
+    drawFood () {
+      const {canvas, ctx, snake, food} = this.state;
+      ctx.fillStyle = 'red';
+      var position = {
+        x: 15,
+        y: 15
+      }
+      while (snake.body.some(cord => _.isEqual(cord, position))) {
+        position.x = Math.floor(Math.random() * 29);
+        position.y = Math.floor(Math.random() * 29);
+      }
+      this.setState({
+        food: position
+      })
+      ctx.fillRect(position.x *  cellSize, position.y * cellSize, cellSize, cellSize);
+    }
+
+    componentDidMount () {
+      this.drawBoard();
     }
 
     render(){
@@ -184,9 +239,9 @@ class Board extends React.Component{
             <div id='gameContainer' className='container-fluid '>
               <div className='viewContainer p-0 row' style={container}>
                 <canvas id='gameBoard' ref="gameBoard" width={boardSize} height={boardSize} />
-                <Snake snake={this.state.snake} 
+                <Snake snake={this.state.snake}
                   changeDirection={this.changeDirection.bind(this)}
-                  moveSnake={this.moveSnake.bind(this)} 
+                  moveSnake={this.moveSnake.bind(this)}
                   endGame={this.endGame.bind(this)}
                   drawBoard={this.drawBoard.bind(this)}
                 />
