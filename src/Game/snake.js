@@ -7,10 +7,33 @@ class Snake extends React.Component{
     constructor (props) {
       super(props)
       console.log(this.props)
-      setInterval(() => {
+      var running = setInterval(() => {
         const snake = this.props.snake;
         console.log("DIRECTION", snake.direction)
-        snake.head.x ++;
+
+        switch(snake.direction){
+          case 'up':
+            snake.head.y--;
+            break;
+          case 'down':
+            snake.head.y++;
+            break;
+          case 'left':
+            snake.head.x--;
+            break;
+          case 'right':
+            snake.head.x++;
+            break;
+          default:
+            break;
+        }
+
+        if (snake.head.x > 29 || snake.head.y > 29 || snake.head.x < 0 || snake.head.y < 0){
+          console.log('lose');
+          this.props.endGame();
+          clearInterval(running);
+        }
+
         var newCell = {
           x: snake.head.x,
           y: snake.head.y
@@ -21,7 +44,7 @@ class Snake extends React.Component{
         snake.tail.y = snake.body[0].y;
         snake.body.splice(0,1);
         this.props.moveSnake();
-      }, 1000);
+      }, 200);
     }
 
     render(){

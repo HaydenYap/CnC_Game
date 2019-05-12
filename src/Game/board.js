@@ -40,10 +40,10 @@ class Board extends React.Component{
       })
     }
 
-    drawPoint(x, y) {
+    drawRect(x, y, l, h) {
       const {canvas, ctx} = this.state
-      ctx.fillStyle = 'green';
-      ctx.fillRect(cellSize * x, cellSize * y, 26, 26);
+      ctx.fillStyle = 'white';
+      ctx.fillRect(x * cellSize, y * cellSize, l * cellSize, h * cellSize);
     }
 
     drawGrid() {
@@ -69,10 +69,59 @@ class Board extends React.Component{
       }
     }
 
-    drawBackground () {
+    drawBackground() {
       const {canvas, ctx} = this.state
       ctx.fillRect(0, 0, canvas.width, canvas.height)
     }
+
+    endGame() {
+      //Horizonal Lines
+      this.drawRect(5,9,4,1);
+      this.drawRect(5,13,4,1);
+      this.drawRect(11,9,2,1);
+      this.drawRect(11,12,2,1);
+      this.drawRect(22,9,3,1);
+      this.drawRect(22,11,3,1);
+      this.drawRect(22,13,3,1);
+
+      this.drawRect(6,16,2,1);
+      this.drawRect(6,20,2,1);
+      this.drawRect(17,16,3,1);
+      this.drawRect(17,18,3,1);
+      this.drawRect(17,20,3,1);
+      this.drawRect(22,16,2,1);
+      this.drawRect(22,18,3,1);
+
+      //Vertical Lines
+      this.drawRect(5,10,1,3);
+      this.drawRect(10,10,1,4);
+      this.drawRect(13,10,1,4);
+      this.drawRect(15,9,1,5);
+      this.drawRect(19,9,1,5);
+      this.drawRect(21,9,1,5);
+      this.drawRect(5,17,1,3);
+      this.drawRect(8,17,1,3);
+
+      this.drawRect(10,16,1,3);
+      this.drawRect(14,16,1,3);
+      this.drawRect(16,16,1,5);
+      this.drawRect(21,16,1,5);
+
+      //Dots
+      this.drawRect(7,11,1,1);
+      this.drawRect(8,12,1,1);
+      this.drawRect(16,10,1,1);
+      this.drawRect(17,11,1,1);
+      this.drawRect(18,10,1,1);
+
+      this.drawRect(11,19,1,1);
+      this.drawRect(12,20,1,1);
+      this.drawRect(13,19,1,1);
+      this.drawRect(24,17,1,1);
+      this.drawRect(23,19,1,1);
+      this.drawRect(24,20,1,1);
+    }
+ 
 
     componentDidMount () {
       const canvas = this.refs.gameBoard
@@ -83,7 +132,7 @@ class Board extends React.Component{
         this.drawBackground();
         this.drawGrid();
         this.drawSnake();
-
+        
       })
     }
 
@@ -97,7 +146,7 @@ class Board extends React.Component{
         return(
             <div>
               <canvas ref="gameBoard" width={780} height={780} className='p-5'/>
-              <Snake snake={this.state.snake} changeDirection={this.changeDirection.bind(this)} moveSnake={this.moveSnake.bind(this)} />
+              <Snake snake={this.state.snake} changeDirection={this.changeDirection.bind(this)} moveSnake={this.moveSnake.bind(this)} endGame={this.endGame.bind(this)} />
             </div>
         )
     }
