@@ -63,28 +63,31 @@ class Board extends React.Component{
 
     addBody() {
       const {snake, score} = this.state
+      var newTail = {
+        
+      }
       score.current += 1
       if (score.current > score.high) {
         score.high = score.current;
       }
       switch(snake.direction){
         case 'up':
-          var newTail = {x: snake.tail.x, y: snake.tail.y - 1}
+          newTail = {x: snake.tail.x, y: snake.tail.y - 1}
           snake.body.push(newTail)
           snake.tail = newTail
           break;
         case 'down':
-          var newTail = {x: snake.tail.x, y: snake.tail.y + 1}
+          newTail = {x: snake.tail.x, y: snake.tail.y + 1}
           snake.body.push(newTail)
           snake.tail = newTail
           break;
         case 'left':
-          var newTail = {x: snake.tail.x - 1, y: snake.tail.y}
+          newTail = {x: snake.tail.x - 1, y: snake.tail.y}
           snake.body.push(newTail)
           snake.tail = newTail
           break;
         case 'right':
-          var newTail = {x: snake.tail.x + 1, y: snake.tail.y}
+          newTail = {x: snake.tail.x + 1, y: snake.tail.y}
           snake.body.push(newTail)
           snake.tail = newTail
           break;
@@ -96,7 +99,7 @@ class Board extends React.Component{
     drawSnake(){
       const {ctx, snake} = this.state
       ctx.fillStyle = 'green';
-      snake.body.map(cord => {
+      snake.body.forEach(cord => {
         ctx.fillRect(cord.x *  cellSize, cord.y * cellSize, cellSize, cellSize);
       })
     }
@@ -236,7 +239,7 @@ class Board extends React.Component{
     }
 
     drawFood () {
-      const {ctx, snake, food} = this.state;
+      const {ctx, snake} = this.state;
       ctx.fillStyle = 'red';
       var position = {
         x: 15,

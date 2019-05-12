@@ -4,10 +4,6 @@ import _ from 'lodash'
 
 class Snake extends React.Component{
 
-    constructor (props) {
-      super(props)
-    }
-
     selfCollide() {
       const snake = this.props.snake;
       return snake.body.some(cord => _.isEqual(cord, snake.head)) || _.isEqual(snake.head, snake.tail)
