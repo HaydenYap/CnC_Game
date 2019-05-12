@@ -6,10 +6,12 @@ class Snake extends React.Component{
 
     constructor (props) {
       super(props)
-      console.log(this.props)
+      console.log(this.props)  
+    }
+
+    run() {
       var running = setInterval(() => {
         const snake = this.props.snake;
-        console.log("DIRECTION", snake.direction)
 
         switch(snake.direction){
           case 'up':
@@ -28,9 +30,14 @@ class Snake extends React.Component{
             break;
         }
 
+        if(this.props.snake.running === false){
+          clearInterval(running)
+        }
+        
         if (snake.head.x > 29 || snake.head.y > 29 || snake.head.x < 0 || snake.head.y < 0){
-          console.log('lose');
           this.props.endGame();
+          snake.running = false
+          snake.alive = false
           clearInterval(running);
         }
 
@@ -45,28 +52,35 @@ class Snake extends React.Component{
         snake.body.splice(0,1);
         this.props.moveSnake();
       }, 200);
-    }
+    } 
 
     render(){
         return(
           <div>
           <KeyboardEventHandler
-            handleKeys={['left', 'up', 'right', 'down']}
+            handleKeys={['left', 'up', 'right', 'down','r']}
             onKeyEvent={(key, e) => {
               var direction = this.props.snake.direction
-              if (key === 'up' && direction === 'down') {
+              if(key === 'r'){
+                this.props.resetBoard()
+              }
+              else if (key === 'up' && (direction === 'down' || direction === 'up')) {
                 return
               }
-              if (key === 'down' && direction === 'up') {
+              else if (key === 'down' && (direction === 'up'|| direction === 'down')) {
                 return
               }
-              if (key === 'left' && direction === 'right') {
+              else if (key === 'left' && (direction === 'right'|| direction === 'left')) {
                 return
               }
-              if (key === 'right' && direction === 'left') {
+              else if (key === 'right' && (direction === 'left'|| direction === 'right')) {
                 return
               }
               else {
+                if (!this.props.snake.running && this.props.snake.alive){
+                  this.run(this.props)
+                  this.props.snake.running = true;
+                }
                 this.props.changeDirection(key)
               }
 
