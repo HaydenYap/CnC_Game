@@ -231,6 +231,7 @@ class Board extends React.Component{
       let newState = Object.assign({}, this.state);
       newState.snake.newDirection = direction;
       this.setState(newState);
+      this.moveSnake();
       console.log("board", direction)
     }
 
