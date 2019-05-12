@@ -56,7 +56,6 @@ class Snake extends React.Component{
 
     render(){
         return(
-          <div>
           <KeyboardEventHandler
             handleKeys={['left', 'up', 'right', 'down']}
             onKeyEvent={(key, e) => {
@@ -79,9 +78,7 @@ class Snake extends React.Component{
                 }
                 this.props.changeDirection(key)
               }
-
             }}/>
-          </div>
         )
     }
 }

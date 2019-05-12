@@ -7,6 +7,10 @@ import KeyboardEventHandler from 'react-keyboard-event-handler';
 var boardSize = 720
 const cellSize = boardSize/30;
 
+const container = {
+  height: boardSize + 'px'
+}
+
 class Board extends React.Component{
     constructor (props) {
       super(props)
@@ -23,8 +27,11 @@ class Board extends React.Component{
           direction: '',
           body: [{x:15,y:15}],
           running: false,
-          alive: true,
-          restart: false,
+          alive: true
+        },
+        score: {
+          current: 0,
+          high: 0
         }
       }
     }
@@ -80,6 +87,9 @@ class Board extends React.Component{
     }
 
     endGame() {
+      this.state.snake.running = false;
+      this.state.snake.aliive = false;
+
       //Horizonal Lines
       this.drawRect(5,9,4,1);
       this.drawRect(5,13,4,1);
@@ -154,7 +164,7 @@ class Board extends React.Component{
         ctx: canvas.getContext('2d')
       }, function () {
         this.drawBackground();
-        this.drawGrid();
+        //this.drawGrid();
         this.drawSnake();
       })
     }
@@ -171,21 +181,29 @@ class Board extends React.Component{
 
     render(){
         return(
-            <div id='gameContainer' className='container-fluid row'>
-              <div className='col-md-12 col-lg-8 p-0'>
+            <div id='gameContainer' className='container-fluid '>
+              <div className='viewContainer p-0 row' style={container}>
                 <canvas id='gameBoard' ref="gameBoard" width={boardSize} height={boardSize} />
-                <Snake snake={this.state.snake} changeDirection={this.changeDirection.bind(this)} moveSnake={this.moveSnake.bind(this)} endGame={this.endGame.bind(this)} resetBoard={this.resetBoard.bind(this)} 
-                drawBoard={this.drawBoard.bind(this)}/>
-              </div>
-              <div className='col-md-12 col-lg-4 p-0'>
-                <Panel />
+                <Snake snake={this.state.snake} 
+                  changeDirection={this.changeDirection.bind(this)}
+                  moveSnake={this.moveSnake.bind(this)} 
+                  endGame={this.endGame.bind(this)}
+                  drawBoard={this.drawBoard.bind(this)}
+                />
+                <Panel score={this.state.score}
+                  resetBoard={this.resetBoard.bind(this)}
+                  endGame={this.endGame.bind(this)}
+                />
               </div>
               <KeyboardEventHandler
-              handleKeys={['r']}
+              handleKeys={['r', 'esc']}
               onKeyEvent={(key, e) => {
-              if(key === 'r'){
-                this.resetBoard()
-              } }}/>
+                if(key === 'r'){
+                  this.resetBoard();
+                } else if (key ==='esc'){
+                  this.endGame();
+                }
+              }}/>
             </div>
         )
     }

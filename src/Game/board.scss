@@ -3,11 +3,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding:auto;
+    padding:0;
+    margin:0;
     background-color: black;
 }
 
 #gameBoard{
     outline: 1px solid white;
+}
+
+.viewContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
