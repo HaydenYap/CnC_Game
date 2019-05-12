@@ -106,7 +106,6 @@ class Board extends React.Component{
 
     drawRect(x, y, l, h) {
       const {ctx} = this.state
-      ctx.fillStyle = 'white';
       ctx.fillRect(x * cellSize, y * cellSize, l * cellSize, h * cellSize);
     }
 
@@ -137,12 +136,14 @@ class Board extends React.Component{
     }
 
     endGame() {
+      const {ctx} = this.state
       let newState = Object.assign({}, this.state);
       newState.snake.running = false;
       newState.snake.alive = false;
       this.setState(newState);
 
       //Horizonal Lines
+      ctx.fillStyle = 'white';
       this.drawRect(5,9,4,1);
       this.drawRect(5,13,4,1);
       this.drawRect(11,9,2,1);
@@ -252,7 +253,7 @@ class Board extends React.Component{
       this.setState({
         food: position
       })
-      ctx.fillRect(position.x *  cellSize, position.y * cellSize, cellSize, cellSize);
+      this.drawRect(position.x, position.y,1,1);
     }
 
     componentDidMount () {
