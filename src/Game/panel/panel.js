@@ -19,7 +19,7 @@ class Panel extends React.Component{
                             {this.props.score.current}    
                         </div>
                     </div>
-                    <div title="High-Score Field" >
+                    <div title="High-Score Field" className='scoreTitle'>
                         <div title="High-Score Title">
                             High-Score:
                         </div>
