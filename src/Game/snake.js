@@ -61,7 +61,7 @@ class Snake extends React.Component{
         if(this.props.snake.running === false){
           clearInterval(running)
         }
-        
+
         snake.head.x = newX;
         snake.head.y = newY;
 
@@ -71,7 +71,6 @@ class Snake extends React.Component{
         }
 
         if (snake.head.x > 29 || snake.head.y > 29 || snake.head.x < 0 || snake.head.y < 0 || this.selfCollide()) {
-          this.props.endGame();
           snake.running = false
           snake.alive = false
           clearInterval(running);

@@ -55,6 +55,10 @@ class Board extends React.Component{
         this.addBody();
         this.drawFood();
       }
+
+      if (snake.alive === false && snake.running === false){
+        this.endGame();
+      }
     }
 
     addBody() {
