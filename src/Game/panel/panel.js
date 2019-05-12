@@ -29,10 +29,10 @@ class Panel extends React.Component{
                     </div>
                 </div>
                 <div className='col-12 py-3'>
-                    <div className='btn btn-outline-light d-block' onClick={this.props.resetBoard}>
+                    <div className='btn btn-outline-light d-block my-2' onClick={this.props.resetBoard}>
                         Restart or 'r'
                     </div>
-                    <div className='btn btn-outline-danger d-block' onClick={this.props.endGame}>
+                    <div className='btn btn-outline-danger d-block my-2' onClick={this.props.endGame}>
                         Stop or 'ESC'
                     </div>
                 </div>
