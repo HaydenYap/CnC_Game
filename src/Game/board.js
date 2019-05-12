@@ -1,16 +1,36 @@
 import React from 'react';
 import './board.scss';
 
-
-// function draw(){
-//     ctx.fillStyle = 'green';
-//     ctx.fillRect(0, 0, 20, 20);
-// }
+const cellSize = 26
 
 class Board extends React.Component{
     constructor (props) {
       super(props)
-      this.state = {}
+      this.state = {
+        snake: {
+          head: {
+            x: 4, 
+            y: 0
+          },
+          tail: {
+            x: 0,
+            y: 0
+          },
+          direction: '',
+          body: [{x:1,y:0}, {x:2,y:0}, {x:3,y:0}] 
+        }  
+      }
+    }
+
+    drawSnake(){
+      const {canvas, ctx, snake} = this.state
+      ctx.fillStyle = 'green';
+
+      ctx.fillRect(snake.head.x *  cellSize, snake.head.y * cellSize, cellSize, cellSize);
+      snake.body.map(cord => {
+        ctx.fillRect(cord.x *  cellSize, cord.y * cellSize, cellSize, cellSize);
+      })
+      ctx.fillRect(snake.tail.x *  cellSize, snake.tail.y * cellSize, cellSize, cellSize);
     }
 
     drawGrid() {
@@ -18,19 +38,17 @@ class Board extends React.Component{
 
       ctx.strokeStyle = 'grey';
       var width = canvas.width;
-      var horizontalDistance = width / 30;
       var height = canvas.height;
-      var verticalDistance = height / 30;
       console.log(width)
       ctx.fillRect(0, 0, canvas.width, canvas.height)
-      for (var vertical = horizontalDistance; vertical < width; vertical += horizontalDistance){
+      for (var vertical = cellSize; vertical < width; vertical += cellSize){
         ctx.beginPath();
         ctx.moveTo(vertical, 0);
         ctx.lineTo(vertical, height);
         ctx.stroke();
       }
 
-      for (var horizontal = verticalDistance; horizontal < height; horizontal += verticalDistance){
+      for (var horizontal = cellSize; horizontal < height; horizontal += cellSize){
         ctx.beginPath();
         ctx.moveTo(0, horizontal);
         ctx.lineTo(width ,horizontal);
@@ -51,6 +69,9 @@ class Board extends React.Component{
       }, function () {
         this.drawBackground();
         this.drawGrid();
+
+        this.drawSnake();
+
       })
     }
 
