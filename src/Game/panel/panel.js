@@ -9,29 +9,32 @@ class Panel extends React.Component{
 
     render(){
         return(
-            <div id='panel' className='p-3'>
-                <div title="Current Score Field">
-                    <div title="Score Title" className='scoreTitle'>
-                        Score:
+            <div id='panel'>
+                <div className='col-12'>
+                    <div title="Current Score Field">
+                        <div title="Score Title" className='scoreTitle'>
+                            Score:
+                        </div>
+                        <div className='score px-1'>
+                            {this.props.score.current}    
+                        </div>
                     </div>
-                    <div className='score px-1'>
-                        {this.props.score.current}    
+                    <div title="High-Score Field" >
+                        <div title="High-Score Title">
+                            High-Score:
+                        </div>
+                        <div className='score px-1'>
+                            {this.props.score.high}
+                        </div>
                     </div>
                 </div>
-                <div title="High-Score Field" >
-                    <div title="High-Score Title">
-                        High-Score:
+                <div className='col-12'>
+                    <div className='btn btn-outline-light' onClick={this.props.resetBoard}>
+                        Restart or 'r'
                     </div>
-                    <div className='score px-1'>
-                        {this.props.score.high}
+                    <div className='btn btn-outline-danger' onClick={this.props.endGame}>
+                        Stop or 'ESC'
                     </div>
-                </div>
-
-                <div className='btn-primary' onClick={this.props.resetBoard}>
-                    Restart or 'r'
-                </div>
-                <div className='btn-primary' onClick={this.props.endGame}>
-                    Stop or 'ESC'
                 </div>
             </div>
         )

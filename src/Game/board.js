@@ -26,6 +26,11 @@ class Board extends React.Component{
             y: 15
           },
           direction: '',
+          newDirection: '',
+          headLast: {
+            x: 15,
+            y: 15
+          },
           body: [{x:15,y:15}],
           running: false,
           alive: true
@@ -39,7 +44,7 @@ class Board extends React.Component{
     }
 
     moveSnake(){
-      const {canvas, ctx, snake, food} = this.state
+      const {ctx, snake, food} = this.state
       ctx.fillStyle = 'black';
       ctx.fillRect(snake.tail.x *  cellSize, snake.tail.y * cellSize, cellSize, cellSize);
       ctx.fillStyle = 'green';
@@ -81,7 +86,7 @@ class Board extends React.Component{
     }
 
     drawSnake(){
-      const {canvas, ctx, snake} = this.state
+      const {ctx, snake} = this.state
       ctx.fillStyle = 'green';
       snake.body.map(cord => {
         ctx.fillRect(cord.x *  cellSize, cord.y * cellSize, cellSize, cellSize);
@@ -89,13 +94,13 @@ class Board extends React.Component{
     }
 
     drawRect(x, y, l, h) {
-      const {canvas, ctx} = this.state
+      const {ctx} = this.state
       ctx.fillStyle = 'white';
       ctx.fillRect(x * cellSize, y * cellSize, l * cellSize, h * cellSize);
     }
 
     drawGrid() {
-      const {canvas, ctx} = this.state
+      const {ctx} = this.state
 
       ctx.strokeStyle = 'grey';
       ctx.fillRect(0, 0, boardSize, boardSize)
@@ -115,14 +120,16 @@ class Board extends React.Component{
     }
 
     drawBackground() {
-      const {canvas, ctx} = this.state
+      const {ctx} = this.state
       ctx.fillStyle = 'black';
       ctx.fillRect(0, 0, boardSize, boardSize)
     }
 
     endGame() {
-      this.state.snake.running = false;
-      this.state.snake.alive = false;
+      let newState = Object.assign({}, this.state);
+      newState.snake.running = false;
+      newState.snake.alive = false;
+      this.setState(newState);
 
       //Horizonal Lines
       this.drawRect(5,9,4,1);
@@ -183,10 +190,16 @@ class Board extends React.Component{
             y: 15
           },
           direction: '',
+          newDirection: '',
+          headLast: {
+            x: 15,
+            y: 15
+          },
           body: [{x:15,y:15}],
           running: false,
           alive: true
-        }
+        },
+        food: {} 
       })
       this.drawBoard();
     }
@@ -205,12 +218,14 @@ class Board extends React.Component{
     }
 
     changeDirection (direction) {
-      const {snake} = this.state
-      this.state.snake.direction = direction
+      let newState = Object.assign({}, this.state);
+      newState.snake.newDirection = direction;
+      this.setState(newState);
+      console.log("board", direction)
     }
 
     drawFood () {
-      const {canvas, ctx, snake, food} = this.state;
+      const {ctx, snake, food} = this.state;
       ctx.fillStyle = 'red';
       var position = {
         x: 15,

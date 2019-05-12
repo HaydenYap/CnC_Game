@@ -17,26 +17,57 @@ class Snake extends React.Component{
       this.props.snake.running = true;
       var running = setInterval(() => {
         const snake = this.props.snake;
+        var newY = snake.head.y;
+        var newX = snake.head.x;
 
-        switch(snake.direction){
+        switch(snake.newDirection){
           case 'up':
-            snake.head.y--;
+            newY-= 1;
             break;
           case 'down':
-            snake.head.y++;
+            newY += 1;
             break;
           case 'left':
-            snake.head.x--;
+            newX -= 1;
             break;
           case 'right':
-            snake.head.x++;
+            newX += 1;
             break;
           default:
             break;
         }
 
+        if (newX === snake.headLast.x && newY === snake.headLast.y){
+          switch(snake.direction){
+            case 'up':
+            newY = snake.head.y - 1;
+            break;
+            case 'down':
+            newY = snake.head.y + 1;
+              break;
+            case 'left':
+            newX = snake.head.x - 1;
+              break;
+            case 'right':
+              newX = snake.head.x + 1;
+              break;
+            default:
+            break;
+          }
+        } else {
+          snake.direction = snake.newDirection;
+        }
+
         if(this.props.snake.running === false){
           clearInterval(running)
+        }
+        
+        snake.head.x = newX;
+        snake.head.y = newY;
+
+        var newCell = {
+          x: snake.head.x,
+          y: snake.head.y
         }
 
         if (snake.head.x > 29 || snake.head.y > 29 || snake.head.x < 0 || snake.head.y < 0 || this.selfCollide()) {
@@ -46,17 +77,13 @@ class Snake extends React.Component{
           clearInterval(running);
         }
 
-        var newCell = {
-          x: snake.head.x,
-          y: snake.head.y
-        }
 
         snake.body.push(newCell)
         snake.tail.x = snake.body[0].x;
         snake.tail.y = snake.body[0].y;
         snake.body.splice(0,1);
         this.props.moveSnake();
-      }, 50);
+      }, 200);
     }
 
     render(){
