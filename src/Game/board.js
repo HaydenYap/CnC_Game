@@ -215,7 +215,7 @@ class Board extends React.Component{
             body: [{x:15,y:15}],
             running: false,
             alive: true,
-            speed: 1
+            speed: this.state.snake.speed
           },
           score: newScore,
           food: {},
